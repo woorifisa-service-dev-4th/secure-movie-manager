@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인</title>
+    <!-- Tailwind CSS Browser@4 CDN (JS 파일 없이 사용) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- 커스텀 CSS -->
+    <link rel="stylesheet" th:href="@{../static/style.css}" />
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+<div class="min-h-screen flex flex-col justify-center items-center">
+    <div class="max-w-md w-full bg-white dark:bg-gray-800 shadow-md rounded p-6">
+        <h2 class="text-2xl font-bold mb-4 text-center">로그인</h2>
+        <form th:action="@{/login}" method="post">
+            <div class="mb-4">
+                <label for="email" class="block mb-1">이메일</label>
+                <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="이메일을 입력하세요"
+                        class="w-full p-2 border rounded dark:bg-gray-700"
+                        required
+                />
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block mb-1">비밀번호</label>
+                <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="비밀번호를 입력하세요"
+                        class="w-full p-2 border rounded dark:bg-gray-700"
+                        required
+                />
+            </div>
+            <div class="mb-4">
+                <button type="submit" class="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    로그인
+                </button>
+            </div>
+        </form>
+        <p class="text-center">
+            계정이 없으신가요?
+            <a th:href="@{/signup}" class="text-blue-500 hover:underline">회원가입하기</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>
