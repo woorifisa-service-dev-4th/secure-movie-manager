@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" th:href="@{../static/style.css}" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+<div class="min-h-screen flex flex-col justify-center items-center">
+    <div class="max-w-md w-full bg-white dark:bg-gray-800 shadow-md rounded p-6">
+        <h2 class="text-2xl font-bold mb-4 text-center">회원가입</h2>
+        <form th:action="@{/signup}" method="post" th:object="${userRegistrationDTO}">
+            <div class="mb-4">
+                <label for="username" class="block mb-1">아이디</label>
+                <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        th:field="*{username}"
+                        placeholder="아이디를 입력하세요"
+                        class="w-full p-2 border rounded dark:bg-gray-700"
+                        required
+                />
+                <div th:if="${usernameError}" class="text-red-500">
+                    <span th:text="${usernameError}"></span>
+                </div>
+                <button type="button" id="checkUsername" class="text-blue-500 mt-2">아이디 중복 확인</button>
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="block mb-1">비밀번호</label>
+                <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        th:field="*{password}"
+                        placeholder="비밀번호를 입력하세요"
+                        class="w-full p-2 border rounded dark:bg-gray-700"
+                        required
+                />
+            </div>
+            <div class="mb-4">
+                <label for="confirmPassword" class="block mb-1">비밀번호 확인</label>
+                <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        th:field="*{confirmPassword}"
+                        placeholder="비밀번호를 다시 입력하세요"
+                        class="w-full p-2 border rounded dark:bg-gray-700"
+                        required
+                />
+            </div>
+
+            <div class="mb-4">
+                <button type="submit" class="w-full py-2 bg-green-500 text-white rounded hover:bg-green-600" id="submitButton">
+                    회원가입
+                </button>
+            </div>
+        </form>
+        <p class="text-center">
+            이미 계정이 있으신가요?
+            <a th:href="@{/login}" class="text-blue-500 hover:underline">로그인하기</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('#checkUsername').on('click', function() {
+            const username = $('#username').val();
+            if (username) {
+                $.ajax({
+                    url: '/check-username',
+                    method: 'POST',
+                    data: { username: username },
+                    success: function(response) {
+                        if (response === false) {
+                            alert('이미 사용 중인 아이디입니다.');
+                            $('#submitButton').prop('disabled', true); // 아이디 중복시 버튼 비활성화
+                        } else {
+                            alert('사용 가능한 아이디입니다.');
+                            $('#submitButton').prop('disabled', false); // 사용 가능한 아이디면 버튼 활성화
+                        }
+                    }
+                });
+            } else {
+                alert('아이디를 입력해주세요.');
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+/* style.css */
+/* 기본 Tailwind CSS 유틸리티를 보완하는 커스텀 스타일입니다. */
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}

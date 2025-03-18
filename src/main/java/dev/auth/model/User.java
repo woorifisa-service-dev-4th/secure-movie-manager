@@ -23,13 +23,18 @@ import javax.persistence.Table;
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	private String username;
 	private String password;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private List<Authority> authorities;
+
+	public User(String username, String password){
+		this.username = username;
+		this.password = password;
+	}
 
 	/**
 	 * 비밀번호 인코딩 처리

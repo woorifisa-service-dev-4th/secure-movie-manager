@@ -22,7 +22,7 @@ public class SecurityConfig {
 
 		// 요청 경로에 따른 권한 설정
 		http.authorizeRequests()
-			.mvcMatchers("/").permitAll() // 루트 경로는 인증 없이 접근 가능
+			.mvcMatchers("/", "/signup", "/check-username").permitAll() // 루트 경로는 인증 없이 접근 가능
 			.mvcMatchers("/admin/**").hasRole("ADMIN") // "/admin/**" → ADMIN만 접근 가능
 			.mvcMatchers("/movie/**").hasAnyRole("USER", "ADMIN") // "/movie/**" → USER, ADMIN 접근 가능
 			.anyRequest().authenticated(); // 그 외 모든 요청은 인증 필요
