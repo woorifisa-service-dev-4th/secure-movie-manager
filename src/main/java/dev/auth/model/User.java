@@ -19,13 +19,17 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "directors")
+@Table(name = "users")
 public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(unique = true, nullable = false)
 	private String username;
+
+	@Column(unique = true, nullable = false)
 	private String password;
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
