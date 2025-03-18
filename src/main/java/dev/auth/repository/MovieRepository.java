@@ -1,4 +1,8 @@
 package dev.auth.repository;
 
-public class MovieRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import dev.auth.model.Movie;
+
+public interface MovieRepository extends JpaRepository<Movie,Long> {
 }
