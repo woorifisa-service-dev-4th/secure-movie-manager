@@ -10,6 +10,7 @@ import dev.auth.dto.MovieUpdateRequestDTO;
 import dev.auth.model.Movie;
 import dev.auth.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,4 +34,19 @@ public class MovieService {
 		movie.setName(dto.getName());
 		return new MovieResponseDTO(movieRepository.save(movie));
 	}
+
+  @PreAuthorize("hasRole('ADMIN')")
+  @Transactional
+  public void createMovie(Movie movie) {
+    movieRepository.save(movie);
+  }
+
+  @PreAuthorize("hasRole('ADMIN')")
+  @Transactional
+  public void deleteMovie(Long id) {
+    if (!movieRepository.existsById(id)) {
+      throw new IllegalArgumentException("해당 영화가 존재하지 않습니다.");
+    }
+    movieRepository.deleteById(id);
+  }
 }

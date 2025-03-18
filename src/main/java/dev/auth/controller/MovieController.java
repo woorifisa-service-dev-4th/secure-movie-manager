@@ -16,12 +16,26 @@ import dev.auth.dto.MovieResponseDTO;
 import dev.auth.service.MovieService;
 import lombok.RequiredArgsConstructor;
 
+
 @Controller
-@RequestMapping("/admin/movie")
+@RequestMapping("/admin/movies")
 @RequiredArgsConstructor
 public class MovieController {
-	private final MovieService movieService;
 
+  private final MovieService movieService;
+  
+  @PostMapping
+  public String createMovie(@ModelAttribute Movie movie) {
+    movieService.createMovie(movie);
+    return "movies";
+  }
+
+  @PostMapping("/delete/{id}")
+  public String deleteMovie(@PathVariable Long id) {
+    movieService.deleteMovie(id);
+    return "movies";
+  }
+  
 	@GetMapping("/")
 	public ResponseEntity<List<MovieResponseDTO>> getAllMovies() {
 		try {
